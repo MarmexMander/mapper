@@ -1,2 +1,9 @@
 ﻿  Source.cpp
-e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(5): fatal error C1083: Не удается открыть файл включение: SFML/Graphics.hpp: No such file or directory,
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(64): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(78): warning C4018: <: несоответствие типов со знаком и без знака
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(111): warning C4804: <: небезопасное использование типа "bool" в операции
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(111): warning C4018: <: несоответствие типов со знаком и без знака
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(113): warning C4804: <: небезопасное использование типа "bool" в операции
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(113): warning C4018: <: несоответствие типов со знаком и без знака
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(122): warning C4018: <: несоответствие типов со знаком и без знака
+  Mapper.vcxproj -> E:\роботы\Projects\git\mapper\Mapper\Debug\Mapper.exe
