@@ -1,4 +1,6 @@
 #define NOMINMAX
+#define TILESET_WIDTH 23
+#define TILESET_HEIGHT 21
 #include <iostream>
 #include <conio.h>
 #include <Windows.h>
@@ -14,11 +16,12 @@ public:
 		s.setTextureRect(IntRect(TextureX * 32, TextureY * 32, 32, 32));
 		s.setPosition(x, y);
 	}
-	bool isPresed() {
-		Vector2i mouse = Mouse::getPosition();
-		Vector2f begin = s.getPosition(), end = s.getPosition() + s.getScale();
+	bool isPresed(Vector2i mouse) {
+		Vector2f begin = s.getPosition(), end = s.getPosition();
+		end.x += s.getTextureRect().width;
+		end.y += s.getTextureRect().height;
 		if (Mouse::isButtonPressed(Mouse::Left) && ((mouse.x >= begin.x) && (mouse.x <= end.x)) && ((mouse.y >= begin.y) && (mouse.y <= end.y))) {
-			s.setColor(Color::Black);
+			s.setColor(Color::Magenta);
 			return 1;
 		}
 		else {
@@ -85,15 +88,30 @@ public:
 	}
 	void setTexture(int x, int y) {
 		textureRectPos.x = x, textureRectPos.y = y;
-		s.setTextureRect(IntRect(textureRectPos.x, textureRectPos.y, 32, 32));
+		s.setTextureRect(IntRect(textureRectPos.x*32, textureRectPos.y*32, 32, 32));
+	}
+	void setTexture(coords xy) {
+		textureRectPos.x = xy.x, textureRectPos.y = xy.y;
+		s.setTextureRect(IntRect(textureRectPos.x * 32, textureRectPos.y * 32, 32, 32));
+	}
+	Sprite getSprite() {
+		return s;
+	}
+	coords getTexture(){
+		return textureRectPos;
 	}
 };
+
 tile **tileMap;
+
 int main() {
 	if (!texture.loadFromFile("textures.png"))
 		exit(-12);
-	int tileMap_Y = 30, tileMap_X = 30, cameraOffset_X = 0, cameraOffset_Y = 0;
-	sButton lButton(0, 2, 23*32, 1);
+	int tileMap_Y = 30, tileMap_X = 30, cameraOffset_X = 0, cameraOffset_Y = 0, chosenPalete = 0;
+	sButton lButton(0, 0, 23*32, 32), rButton(0, 0, 25 * 32, 32);
+	tile palette;
+	palette.setPos(24, 1);
+	palette.setTexture(1,0);
 	sf::RenderWindow window{ {1280, 720}, "Window" };
 	tileMap = new tile*[tileMap_Y];
 	RectangleShape tileRect;
@@ -108,6 +126,25 @@ int main() {
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
+			if (event.type == Event::MouseButtonPressed || event.type == Event::MouseButtonReleased) {
+				Vector2i mousePos = Mouse::getPosition(window);
+				if (lButton.isPresed(mousePos)) {
+					if (chosenPalete != 0)
+						chosenPalete--;
+					int x, y;
+					y = chosenPalete / TILESET_WIDTH;
+					x = chosenPalete - (y * TILESET_WIDTH);
+					palette.setTexture(x, y);
+				}
+				if (rButton.isPresed(mousePos)) {
+					if (chosenPalete != TILESET_WIDTH * TILESET_HEIGHT)
+						chosenPalete++;
+					int x, y;
+					y = chosenPalete / TILESET_WIDTH;
+					x = chosenPalete - (y * TILESET_WIDTH);
+					palette.setTexture(x, y);
+				}
+			}
 			if (event.type == Event::KeyPressed) {
 				switch (event.key.code) {
 				case Keyboard::Left:
@@ -129,9 +166,6 @@ int main() {
 				}
 
 			}
-			if (lButton.isPresed()) {
-
-			}
 		}
 
 		if (Mouse::isButtonPressed(Mouse::Left)) {
@@ -140,8 +174,9 @@ int main() {
 			mousePos.y /= 32;
 			mousePos.x += cameraOffset_X;
 			mousePos.y += cameraOffset_Y;
-			if ((mousePos.x < tileMap_X && mousePos.x > -1) && (mousePos.y < tileMap_Y && mousePos.y > -1))
-				tileMap[mousePos.y][mousePos.x].setTexture(32, 32);
+			if ((mousePos.x < tileMap_X && mousePos.x > -1) && (mousePos.y < tileMap_Y && mousePos.y > -1)) {
+				tileMap[mousePos.y][mousePos.x].setTexture(palette.getTexture());
+			}
 		}
 
 		for (size_t j = cameraOffset_Y, jj = 0; j < ((tileMap_Y < 20) ? tileMap_Y : 20)+cameraOffset_Y; j++, jj++)
@@ -151,8 +186,10 @@ int main() {
 				window.draw(tileMap[j][i].setPos(ii, jj));
 			}
 		}
-		window.display();
+		window.draw(palette.getSprite());
 		window.draw(lButton.getSprite());
+		window.draw(rButton.getSprite());
+		window.display();
 		window.clear();
 	}
 

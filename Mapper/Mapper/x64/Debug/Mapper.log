@@ -1,5 +1,5 @@
 ﻿  Source.cpp
-e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(15): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
-e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(83): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
-e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(151): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(17): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(86): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(186): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
   Mapper.vcxproj -> E:\роботы\Projects\git\mapper\Mapper\x64\Debug\Mapper.exe
