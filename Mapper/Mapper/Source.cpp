@@ -92,8 +92,8 @@ tile **tileMap;
 int main() {
 	if (!texture.loadFromFile("textures.png"))
 		exit(-12);
-	int tileMap_Y = 30, tileMap_X = 22, cameraOffset_X = 0, cameraOffset_Y = 0;
-	sButton lButton(17, 22, 23*32, 1);
+	int tileMap_Y = 30, tileMap_X = 30, cameraOffset_X = 0, cameraOffset_Y = 0;
+	sButton lButton(0, 2, 23*32, 1);
 	sf::RenderWindow window{ {1280, 720}, "Window" };
 	tileMap = new tile*[tileMap_Y];
 	RectangleShape tileRect;
@@ -110,19 +110,19 @@ int main() {
 				window.close();
 			if (event.type == Event::KeyPressed) {
 				switch (event.key.code) {
-				case Keyboard::Up:
+				case Keyboard::Left:
 					if (cameraOffset_X != 0)
 						cameraOffset_X--;
 					break;
-				case Keyboard::Down:
+				case Keyboard::Right:
 					if (cameraOffset_X != tileMap_X - ((tileMap_X < 20) ? tileMap_X : 20))
 						cameraOffset_X++;
 					break;
-				case Keyboard::Left:
+				case Keyboard::Up:
 					if (cameraOffset_Y != 0)
 						cameraOffset_Y--;
 					break;
-				case Keyboard::Right:
+				case Keyboard::Down:
 					if (cameraOffset_Y != tileMap_Y - ((tileMap_Y < 20) ? tileMap_Y : 20))
 						cameraOffset_Y++;
 					break;
@@ -141,18 +141,18 @@ int main() {
 			mousePos.x += cameraOffset_X;
 			mousePos.y += cameraOffset_Y;
 			if ((mousePos.x < tileMap_X && mousePos.x > -1) && (mousePos.y < tileMap_Y && mousePos.y > -1))
-				tileMap[mousePos.x][mousePos.y].setTexture(32, 32);
+				tileMap[mousePos.y][mousePos.x].setTexture(32, 32);
 		}
 
 		for (size_t j = cameraOffset_Y, jj = 0; j < ((tileMap_Y < 20) ? tileMap_Y : 20)+cameraOffset_Y; j++, jj++)
 		{
 			for (size_t i = cameraOffset_X, ii = 0; i < ((tileMap_X < 20) ? tileMap_X : 20)+cameraOffset_X; i++, ii++)
 			{
-				window.draw(tileMap[j][i].setPos(jj, ii));
+				window.draw(tileMap[j][i].setPos(ii, jj));
 			}
 		}
-		window.draw(lButton.getSprite());
 		window.display();
+		window.draw(lButton.getSprite());
 		window.clear();
 	}
 
