@@ -1,5 +1,94 @@
 ﻿  Source.cpp
-e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(17): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
-e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(86): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
-e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(186): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(121): warning C4244: =: преобразование "T" в "T", возможна потеря данных
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(122): warning C4244: =: преобразование "T" в "T", возможна потеря данных
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(125): warning C4244: =: преобразование "T" в "T", возможна потеря данных
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(126): warning C4244: =: преобразование "T" в "T", возможна потеря данных
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(159): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(197): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(223): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(225): warning C4244: аргумент: преобразование "double" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(226): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(271): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(273): warning C4244: аргумент: преобразование "double" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(274): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(349): warning C4244: =: преобразование "T" в "T", возможна потеря данных
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(350): warning C4244: =: преобразование "T" в "T", возможна потеря данных
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(353): warning C4244: =: преобразование "T" в "T", возможна потеря данных
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(354): warning C4244: =: преобразование "T" в "T", возможна потеря данных
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(432): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(454): warning C4101: i: неиспользованная локальная переменная
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(666): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(546): warning C4101: i: неиспользованная локальная переменная
   Mapper.vcxproj -> E:\роботы\Projects\git\mapper\Mapper\x64\Debug\Mapper.exe
