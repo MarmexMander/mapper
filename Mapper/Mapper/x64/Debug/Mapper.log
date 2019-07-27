@@ -87,8 +87,8 @@ e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(354): warning C4244
           [
               T=float
           ]
-e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(432): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
-e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(454): warning C4101: i: неиспользованная локальная переменная
-e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(666): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
-e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(546): warning C4101: i: неиспользованная локальная переменная
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(444): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(489): warning C4101: i: неиспользованная локальная переменная
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(758): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+e:\роботы\projects\git\mapper\mapper\mapper\source.cpp(591): warning C4101: i: неиспользованная локальная переменная
   Mapper.vcxproj -> E:\роботы\Projects\git\mapper\Mapper\x64\Debug\Mapper.exe

@@ -402,6 +402,18 @@ class tile {
 	//		linkedtile->use;
 	//}
 public:
+	bool getSolid() {
+		return solid;
+	}
+	coords getAltTexture() {
+		return altTextureRectPos;
+	}
+	short int getType() {
+		return type;
+	}
+	tile* getLinkedTile() {
+		return linkedTile;
+	}
 	tile() {
 		textureRectPos.x = 0, textureRectPos.y = 0;
 
@@ -446,26 +458,57 @@ public:
 	coords getTexture() {
 		return textureRectPos;
 	}
+	void setAltTexture(coords xy) {
+		altTextureRectPos.x = xy.x, altTextureRectPos.y = xy.y;
+	}
+
+	void setSolid(bool _solid) {
+		solid = _solid;
+	}
+
+	void setType(short int _type) {
+		type = _type;
+	}
+
+	void setLinkedTile(tile *_linkedTile) {
+		linkedTile = _linkedTile;
+	}
+};
+
+struct tileInfo {
+	coords textureRectPos;
+	coords altTextureRectPos;
+	short int type = 1;
+	tile *linkedTile;
+	bool solid;
 };
 
 tile **tileMap = NULL;
 
-void saveMap(int x, int y) {
+void saveMap(int x, int y, char* name = (char*)"map") {
 	int i;
 	tile buffTile;
 	coords tempMapSize;
 	std::ofstream save;
-	save.open("map.map", std::ofstream::trunc);
+	tileInfo buff;
+	save.open(std::string(name)+".map", std::ofstream::trunc);
 	if (save.is_open()) {
 		for (size_t j = 0; j < y; j++)
 		{
 			for (size_t i = 0; i < x; i++)
 			{
-				save.write((char*)&tileMap[j][i], sizeof(tile));
+				buff.textureRectPos = tileMap[j][i].getTexture();
+				buff.altTextureRectPos = tileMap[j][i].getAltTexture();
+				buff.linkedTile = tileMap[j][i].getLinkedTile();
+				buff.type = tileMap[j][i].getType();
+				buff.solid = tileMap[j][i].getSolid();
+				save.write((char*)&buff, sizeof(tileInfo));
 			}
 		}
 		save.close();
-		save.open("map.size", std::ofstream::trunc);
+		save.open(std::string(name) + ".size", std::ofstream::trunc);
+		if (!save.is_open())
+			std::cout << "Err" << std::endl;
 		tempMapSize.x = x;
 		tempMapSize.y = y;
 		save.write((char*)&tempMapSize, sizeof(coords));
@@ -486,7 +529,7 @@ int main() {
 		lable.setString("Enter card size (tiles) or load from file.");
 		enterNum x(IntRect(128, 120, 152, 32), Color::Color(100, 100, 100, 255), Color::White), y(IntRect(128 + 152 + 152, 120, 152, 32), Color::Color(100, 100, 100, 255), Color::White);
 		boxButton newMap(IntRect(128, 170, 152, 32), (char*)"Create"), loadMap(IntRect(128 + 152 + 152, 170, 152, 32), (char*)"Load");
-		Input mapName(32,32,128,20);
+		Input mapName(32, 64, 128, 20);
 		Event ev;
 		bool load;
 		while (1) {
@@ -517,6 +560,7 @@ int main() {
 			window.display();
 		}
 		if (load) {
+			Label loadLable(32, 32, "Enter map name:");
 			std::string path;
 			while (1) {
 				if (window.pollEvent(ev)) {
@@ -529,7 +573,7 @@ int main() {
 					{
 						if (ev.mouseButton.button == sf::Mouse::Left)
 						{
-							Vector2i mouse = Mouse::getPosition(window); 
+							Vector2i mouse = Mouse::getPosition(window);
 							mapName.select(mouse);	  		//ïîëå ââîäà
 
 						}
@@ -537,6 +581,7 @@ int main() {
 					if (ev.type == Event::KeyPressed && ev.key.code == Keyboard::Enter)
 						break;
 				}
+
 				window.draw(mapName.displayButton());
 				window.draw(mapName.displayText());
 				window.display();
@@ -547,13 +592,14 @@ int main() {
 			tile buffTile;
 			coords tempMapSize;
 			std::ifstream load;
-			load.open(path+".size");
+			load.open(path + ".size");
 			if (load.is_open()) {
 
 				load.read((char*)&tempMapSize, sizeof(coords));
 				tileMap_X = tempMapSize.x;
 				tileMap_Y = tempMapSize.y;
 				load.close();
+				tileInfo buff;
 				load.open(path + ".map");
 				if (load.is_open()) {
 					if (tileMap != NULL) {
@@ -572,25 +618,33 @@ int main() {
 					{
 						for (size_t i = 0; i < tileMap_X; i++)
 						{
-							load.read((char*)&tileMap[j][i], sizeof(tile));//ÍÅ ÂÈÊÀ×Óª Ç ÔÀÉËÀ ÊÀÐÒÈ Í²×ÎÃÎ(Ò²ËÜÊÈ Ç ÔÀÉËÀ Ç ÐÀÇÌÅÐÎÌ ÊÀÐÒÈ)
+							load.read((char*)&buff, sizeof(tileInfo));//ÍÅ ÂÈÊÀ×Óª Ç ÔÀÉËÀ ÊÀÐÒÈ Í²×ÎÃÎ(Ò²ËÜÊÈ Ç ÔÀÉËÀ Ç ÐÀÇÌÅÐÎÌ ÊÀÐÒÈ)
+							tileMap[j][i].setTexture(buff.textureRectPos);
+							tileMap[j][i].setAltTexture(buff.altTextureRectPos);
+							tileMap[j][i].setLinkedTile(buff.linkedTile);
+							tileMap[j][i].setType(buff.type);
+							tileMap[j][i].setSolid(buff.solid);
 						}
 					}
 				}
 			}
 			load.close();
 		}
+		else
+		{
+			tileMap = new tile*[tileMap_Y];
+			for (size_t i = 0; i < tileMap_Y; i++)
+			{
+				tileMap[i] = new tile[tileMap_X];
+			}
+		}
 	}
 	sButton lButton(0, 0, 23 * 32, 32), rButton(0, 0, 25 * 32, 32);
-	boxButton save(IntRect(32,32*21,128,32), (char*)"SAVE");
+	boxButton save(IntRect(32, 32 * 21, 128, 32), (char*)"SAVE");
 	enterNum set(IntRect(27 * 32, 32, 64, 32), Color::Green, Color::Black);
 	tile palette;
 	palette.setPos(24, 1);
 	palette.setTexture(1, 0);
-	tileMap = new tile*[tileMap_Y];
-	for (size_t i = 0; i < tileMap_Y; i++)
-	{
-		tileMap[i] = new tile[tileMap_X];
-	}
 	while (window.isOpen())
 	{
 		Vector2i mousePos = Mouse::getPosition(window);
@@ -601,8 +655,47 @@ int main() {
 			if (event.type == sf::Event::Closed)
 				window.close();
 			if (event.type == Event::MouseButtonPressed || event.type == Event::MouseButtonReleased) {
-				if (save.isPresed(mousePos))
-					saveMap(tileMap_X, tileMap_Y);
+				if (save.isPresed(mousePos)) {
+						boxButton ok(IntRect(520, 350, 120, 30), (char*)"OK"), cancle(IntRect(660, 350, 120, 30), (char*)"Cancle");
+						Input name(520, 310, 260, 30);
+						Event saveDialEvent;
+						bool ext = 0;
+						while (true)
+						{
+							while (window.pollEvent(saveDialEvent)) {
+								Vector2i mouse = Mouse::getPosition(window);
+								if (saveDialEvent.type == sf::Event::TextEntered) {
+									if (name.select()) {
+										name.reText(saveDialEvent.text.unicode);
+									}
+								}
+								if (saveDialEvent.type == sf::Event::MouseButtonPressed)
+								{
+									if (saveDialEvent.mouseButton.button == sf::Mouse::Left)
+									{
+										name.select(mouse);
+										if (ok.isPresed(mouse)) {
+											saveMap(tileMap_X, tileMap_Y, (char*)name.readText().c_str());
+											Mouse::setPosition(Mouse::getPosition()+Vector2i(100,0));
+											ext = 1;
+										}
+										if (cancle.isPresed(mouse))
+											ext = 1;
+									}
+								}
+							}
+							if (ext)
+								break;
+							window.clear();
+							window.draw(ok.getBox());
+							window.draw(ok.getText());
+							window.draw(cancle.getBox());
+							window.draw(cancle.getText());
+							window.draw(name.displayButton());
+							window.draw(name.displayText());
+							window.display();
+						}
+				}
 				if (lButton.isPresed(mousePos)) {
 					if (chosenPalete != 0)
 						chosenPalete--;
@@ -654,7 +747,7 @@ int main() {
 			mousePos.y /= 32;
 			mousePos.x += cameraOffset_X;
 			mousePos.y += cameraOffset_Y;
-			if ((mousePos.x < tileMap_X && mousePos.x > -1) && (mousePos.y < tileMap_Y && mousePos.y > -1)) {
+			if ((mousePos.x < 20 && mousePos.x > -1) && (mousePos.y < 20 && mousePos.y > -1)) {
 				tileMap[mousePos.y][mousePos.x].setTexture(palette.getTexture());
 			}
 		}
